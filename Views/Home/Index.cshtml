@@ -1,0 +1,53 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+<div class="container">
+    <div id="travelspots" class="row row-cols-5">
+    </div>
+</div>
+
+@section Styles{
+    <style>
+        #travelspots img{
+            width:100%;
+            height:160px;
+            object-fit:cover;
+        }
+    </style>
+}
+
+@section Scripts{
+    <script src="~/datas/Travel.js"></script>
+    <script>
+        const datas = spots.CommonFormat.Section.map(t => {
+            const { stitle, xbody, file } = t;
+            if (file.img.length > 1) {
+                return (`<div class="card">
+                              <img src="${file.img[0].text}" class="card-img-top" alt="...">
+                              <div class = "card-body">
+                              <h5 class = "card-title">${stitle}</h5>
+                              <p class = "card-text">${xbody.substring(0,100)}</p>
+                              </div>
+                              </div>
+            `)}
+            else{
+                return (`<div class="card">
+                                      <img src="${file.img.text}" class="card-img-top" alt="...">
+                                      <div class = "card-body">
+                                      <h5 class = "card-title">${stitle}</h5>
+                                      <p class = "card-text">${xbody.substring(0, 100)}</p>
+                                      </div>
+                                      </div>
+
+                    `)
+            }
+        })
+        document.querySelector(`#travelspots`).innerHTML = datas.join("");
+    </script>
+}
